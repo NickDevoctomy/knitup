@@ -21,7 +21,6 @@ namespace KnitupFramework.Word
         #region private objects
 
         private KnitupProject cKPtProject = null;
-        private Boolean cBlnGenerateTableOfContents = true;
 
         #endregion
 
@@ -30,12 +29,6 @@ namespace KnitupFramework.Word
         public KnitupProject Project
         {
             get { return (cKPtProject); }
-        }
-
-        public Boolean GenerateTableOfContents
-        {
-            get { return (cBlnGenerateTableOfContents); }
-            set { cBlnGenerateTableOfContents = value; }
         }
 
         #endregion
@@ -205,10 +198,29 @@ namespace KnitupFramework.Word
             }
 
             //write table of contents here
-            if(GenerateTableOfContents)
+            //Object pObjTableOfContents = null;
+            //dynamic pObjTableOfContents = null;
+            String pStrTOCToken = String.Format("[{0}]", Guid.NewGuid().ToString());
+            if(cKPtProject.Options.GenerateTableOfContents)
             {
-                RaiseGenerateProgress(GeneratorGenerateEventArgs.ProgressCounterType.indeterminate, 0, 0, "Generating table of contents.", "");
+                RaiseGenerateProgress(GeneratorGenerateEventArgs.ProgressCounterType.indeterminate, 0, 0, "Inserting table of contents placeholder.", "");
 
+                Int32 pIntTOCStart = pObjActiveRange.End;
+                pObjActiveRange.InsertAfter("Table Of Contents" + "\r\n");
+                Int32 pIntTOCEnd = pObjActiveRange.End;
+                pObjActiveRange.Start = pIntTOCStart;
+                pObjActiveRange.Style = String.Format("Heading 1");
+                pObjActiveRange.Start = pIntTOCEnd;
+
+                pIntTOCStart = pObjActiveRange.End;
+                pObjActiveRange.InsertAfter(pStrTOCToken);
+                pIntTOCEnd = pObjActiveRange.End;
+                pObjActiveRange.Start = pIntTOCStart;
+                pObjActiveRange.Style = String.Format("Normal");
+                pObjActiveRange.Start = pIntTOCEnd;
+
+                pObjActiveRange.InsertBreak(3);
+                pObjActiveRange.InsertBreak(7);
             }
 
             //Write main body here
@@ -232,6 +244,7 @@ namespace KnitupFramework.Word
 
                                 if (pIntCurSection == 14)
                                 {
+                                    //Start of our comlumned section
                                     pObjActiveRange.InsertBreak(3);
                                     pObjActiveRange.PageSetup.TextColumns.Add();
                                     pObjActiveRange.PageSetup.DifferentFirstPageHeaderFooter = 0;
@@ -303,6 +316,15 @@ namespace KnitupFramework.Word
                 }
             }
 
+            if (cKPtProject.Options.GenerateTableOfContents)
+            {
+                RaiseGenerateProgress(GeneratorGenerateEventArgs.ProgressCounterType.indeterminate, 0, 0, "Generating table of contents.", "");
+                pObjDoc.SelectAllEditableRanges();
+                if (pObjApp.Selection.Find.Execute(ref pStrTOCToken))
+                {
+                    pObjDoc.TablesOfContents.Add(pObjApp.Selection.Range, -1, 1, 2);
+                }
+            }
 
             RaiseGenerateProgress(GeneratorGenerateEventArgs.ProgressCounterType.indeterminate, 0, 0, "Deleting intermediate files.", "");
             foreach (String curIntermediatFile in pDicIntermediateFiles.Keys)

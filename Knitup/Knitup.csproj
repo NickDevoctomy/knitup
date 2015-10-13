@@ -100,7 +100,6 @@
     <None Include="Resources\Zoom-In_24.png" />
     <None Include="Resources\Zoom-Out_24.png" />
     <None Include="Resources\Open_32.png" />
-    <Content Include="TODO.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

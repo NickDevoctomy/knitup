@@ -24,6 +24,7 @@ namespace KnitupFramework.Project
         #region private objects
 
         private String cStrCopyrightMessage = String.Empty;
+        private Boolean cBlnGenerateTableOfContents = false;
 
         #endregion
 
@@ -45,6 +46,22 @@ namespace KnitupFramework.Project
             }
         }
 
+        public Boolean GenerateTableOfContents
+        {
+            get
+            {
+                return (cBlnGenerateTableOfContents);
+            }
+            set
+            {
+                if(cBlnGenerateTableOfContents != value)
+                {
+                    cBlnGenerateTableOfContents = value;
+                    NotifyPropertyChanged("GenerateTableOfContents");
+                }
+            }
+        }
+
         #endregion
 
         #region public methods
@@ -54,6 +71,7 @@ namespace KnitupFramework.Project
             JObject pJOtJSON = new JObject();
 
             pJOtJSON.Add("CopyrightMessage", new JValue(CopyrightMessage));
+            pJOtJSON.Add("GenerateTableOfContents", new JValue(GenerateTableOfContents));
 
             return (pJOtJSON);
         }
@@ -71,6 +89,7 @@ namespace KnitupFramework.Project
                         JObject pJOtOptions = JObject.Load(pJTRReader);
 
                         CopyrightMessage = pJOtOptions["CopyrightMessage"].Value<String>();
+                        GenerateTableOfContents = pJOtOptions["GenerateTableOfContents"].Value<Boolean>();
                     }
                 }
             }

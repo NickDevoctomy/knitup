@@ -52,6 +52,7 @@ namespace Knitup
 
             //Options
             txtCopyrightMessage.Text = cKPtProject.Options.CopyrightMessage;
+            chkGenerateTableOfContents.Checked = cKPtProject.Options.GenerateTableOfContents;
 
             UpdateSaveState();
             cKPtProject.PropertyChanged += CKPtProject_PropertyChanged;
@@ -264,6 +265,11 @@ namespace Knitup
             {
                 txtBuildOutput.AppendText(String.Format("{0} {1}/{2}.\r\n", e.Message, e.CounterValue, e.CounterLimit));
             }
+        }
+
+        private void chkGenerateTableOfContents_CheckedChanged(object sender, EventArgs e)
+        {
+            cKPtProject.Options.GenerateTableOfContents = chkGenerateTableOfContents.Checked;
         }
 
         #endregion

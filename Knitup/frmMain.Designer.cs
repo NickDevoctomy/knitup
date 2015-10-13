@@ -30,6 +30,7 @@
         {
             this.tclMain = new System.Windows.Forms.TabControl();
             this.tpeInput = new System.Windows.Forms.TabPage();
+            this.scrBuild = new System.Windows.Forms.SplitContainer();
             this.scrInput = new System.Windows.Forms.SplitContainer();
             this.txtInput = new System.Windows.Forms.TextBox();
             this.tspInput = new System.Windows.Forms.ToolStrip();
@@ -38,6 +39,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbInputPreview = new System.Windows.Forms.ToolStripButton();
             this.wbrHTMLPreview = new System.Windows.Forms.WebBrowser();
+            this.txtBuildOutput = new System.Windows.Forms.TextBox();
             this.tpeDesign = new System.Windows.Forms.TabPage();
             this.picBackgroundImage = new System.Windows.Forms.PictureBox();
             this.lblBackgroundImage = new System.Windows.Forms.Label();
@@ -62,10 +64,13 @@
             this.buildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wordDocumentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.scrBuild = new System.Windows.Forms.SplitContainer();
-            this.txtBuildOutput = new System.Windows.Forms.TextBox();
+            this.chkGenerateTableOfContents = new System.Windows.Forms.CheckBox();
             this.tclMain.SuspendLayout();
             this.tpeInput.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.scrBuild)).BeginInit();
+            this.scrBuild.Panel1.SuspendLayout();
+            this.scrBuild.Panel2.SuspendLayout();
+            this.scrBuild.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scrInput)).BeginInit();
             this.scrInput.Panel1.SuspendLayout();
             this.scrInput.Panel2.SuspendLayout();
@@ -76,10 +81,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.picCompanyLogo)).BeginInit();
             this.tpeOptions.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.scrBuild)).BeginInit();
-            this.scrBuild.Panel1.SuspendLayout();
-            this.scrBuild.Panel2.SuspendLayout();
-            this.scrBuild.SuspendLayout();
             this.SuspendLayout();
             // 
             // tclMain
@@ -104,6 +105,24 @@
             this.tpeInput.TabIndex = 0;
             this.tpeInput.Text = "Input";
             this.tpeInput.UseVisualStyleBackColor = true;
+            // 
+            // scrBuild
+            // 
+            this.scrBuild.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scrBuild.Location = new System.Drawing.Point(3, 3);
+            this.scrBuild.Name = "scrBuild";
+            this.scrBuild.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // scrBuild.Panel1
+            // 
+            this.scrBuild.Panel1.Controls.Add(this.scrInput);
+            // 
+            // scrBuild.Panel2
+            // 
+            this.scrBuild.Panel2.Controls.Add(this.txtBuildOutput);
+            this.scrBuild.Size = new System.Drawing.Size(1264, 722);
+            this.scrBuild.SplitterDistance = 361;
+            this.scrBuild.TabIndex = 2;
             // 
             // scrInput
             // 
@@ -195,6 +214,20 @@
             this.wbrHTMLPreview.Size = new System.Drawing.Size(96, 100);
             this.wbrHTMLPreview.TabIndex = 0;
             // 
+            // txtBuildOutput
+            // 
+            this.txtBuildOutput.BackColor = System.Drawing.Color.Black;
+            this.txtBuildOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtBuildOutput.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBuildOutput.ForeColor = System.Drawing.Color.White;
+            this.txtBuildOutput.Location = new System.Drawing.Point(0, 0);
+            this.txtBuildOutput.Multiline = true;
+            this.txtBuildOutput.Name = "txtBuildOutput";
+            this.txtBuildOutput.ReadOnly = true;
+            this.txtBuildOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtBuildOutput.Size = new System.Drawing.Size(1264, 357);
+            this.txtBuildOutput.TabIndex = 1;
+            // 
             // tpeDesign
             // 
             this.tpeDesign.Controls.Add(this.picBackgroundImage);
@@ -255,6 +288,7 @@
             // 
             // tpeOptions
             // 
+            this.tpeOptions.Controls.Add(this.chkGenerateTableOfContents);
             this.tpeOptions.Controls.Add(this.txtCopyrightMessage);
             this.tpeOptions.Controls.Add(this.lblCopyrightMessage);
             this.tpeOptions.Location = new System.Drawing.Point(4, 29);
@@ -397,7 +431,7 @@
             this.compileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.wordDocumentToolStripMenuItem});
             this.compileToolStripMenuItem.Name = "compileToolStripMenuItem";
-            this.compileToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.compileToolStripMenuItem.Size = new System.Drawing.Size(163, 30);
             this.compileToolStripMenuItem.Text = "Compile";
             // 
             // wordDocumentToolStripMenuItem
@@ -407,37 +441,17 @@
             this.wordDocumentToolStripMenuItem.Text = "Word Document";
             this.wordDocumentToolStripMenuItem.Click += new System.EventHandler(this.wordDocumentToolStripMenuItem_Click);
             // 
-            // scrBuild
+            // chkGenerateTableOfContents
             // 
-            this.scrBuild.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scrBuild.Location = new System.Drawing.Point(3, 3);
-            this.scrBuild.Name = "scrBuild";
-            this.scrBuild.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // scrBuild.Panel1
-            // 
-            this.scrBuild.Panel1.Controls.Add(this.scrInput);
-            // 
-            // scrBuild.Panel2
-            // 
-            this.scrBuild.Panel2.Controls.Add(this.txtBuildOutput);
-            this.scrBuild.Size = new System.Drawing.Size(1264, 722);
-            this.scrBuild.SplitterDistance = 361;
-            this.scrBuild.TabIndex = 2;
-            // 
-            // txtBuildOutput
-            // 
-            this.txtBuildOutput.BackColor = System.Drawing.Color.Black;
-            this.txtBuildOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtBuildOutput.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBuildOutput.ForeColor = System.Drawing.Color.White;
-            this.txtBuildOutput.Location = new System.Drawing.Point(0, 0);
-            this.txtBuildOutput.Multiline = true;
-            this.txtBuildOutput.Name = "txtBuildOutput";
-            this.txtBuildOutput.ReadOnly = true;
-            this.txtBuildOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtBuildOutput.Size = new System.Drawing.Size(1264, 357);
-            this.txtBuildOutput.TabIndex = 1;
+            this.chkGenerateTableOfContents.AutoSize = true;
+            this.chkGenerateTableOfContents.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkGenerateTableOfContents.Location = new System.Drawing.Point(27, 108);
+            this.chkGenerateTableOfContents.Name = "chkGenerateTableOfContents";
+            this.chkGenerateTableOfContents.Size = new System.Drawing.Size(259, 24);
+            this.chkGenerateTableOfContents.TabIndex = 5;
+            this.chkGenerateTableOfContents.Text = "Generate Table of Contents";
+            this.chkGenerateTableOfContents.UseVisualStyleBackColor = true;
+            this.chkGenerateTableOfContents.CheckedChanged += new System.EventHandler(this.chkGenerateTableOfContents_CheckedChanged);
             // 
             // frmMain
             // 
@@ -450,6 +464,11 @@
             this.Text = "Knitup";
             this.tclMain.ResumeLayout(false);
             this.tpeInput.ResumeLayout(false);
+            this.scrBuild.Panel1.ResumeLayout(false);
+            this.scrBuild.Panel2.ResumeLayout(false);
+            this.scrBuild.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.scrBuild)).EndInit();
+            this.scrBuild.ResumeLayout(false);
             this.scrInput.Panel1.ResumeLayout(false);
             this.scrInput.Panel1.PerformLayout();
             this.scrInput.Panel2.ResumeLayout(false);
@@ -465,11 +484,6 @@
             this.tpeOptions.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.scrBuild.Panel1.ResumeLayout(false);
-            this.scrBuild.Panel2.ResumeLayout(false);
-            this.scrBuild.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.scrBuild)).EndInit();
-            this.scrBuild.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -513,6 +527,7 @@
         private System.Windows.Forms.ToolStripMenuItem wordDocumentToolStripMenuItem;
         private System.Windows.Forms.SplitContainer scrBuild;
         private System.Windows.Forms.TextBox txtBuildOutput;
+        private System.Windows.Forms.CheckBox chkGenerateTableOfContents;
     }
 }
 
