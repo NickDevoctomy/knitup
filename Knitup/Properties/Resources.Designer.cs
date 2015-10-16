@@ -63,6 +63,26 @@ namespace Knitup.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Microsoft_Word_New_24 {
+            get {
+                object obj = ResourceManager.GetObject("Microsoft_Word_New_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Open_24 {
+            get {
+                object obj = ResourceManager.GetObject("Open_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Open_32 {
             get {
                 object obj = ResourceManager.GetObject("Open_32", resourceCulture);

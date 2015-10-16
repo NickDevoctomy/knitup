@@ -5,6 +5,7 @@ using KnitupFramework.Word;
 using System;
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Knitup
@@ -69,6 +70,22 @@ namespace Knitup
         {
             saveToolStripMenuItem.Enabled = cKPtProject.IsDirty;
             saveAsToolStripMenuItem.Enabled = !String.IsNullOrEmpty(cKPtProject.FullPath);
+        }
+
+        private async Task OpenProject()
+        {
+            using (OpenFileDialog pOFDBrowse = new OpenFileDialog())
+            {
+                pOFDBrowse.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+                pOFDBrowse.Filter = "Knitup Projects (*.kup)|*.kup";
+                pOFDBrowse.Title = "Browse for Project...";
+                pOFDBrowse.Multiselect = false;
+                if (pOFDBrowse.ShowDialog() == DialogResult.OK)
+                {
+                    KnitupProject pKPtProject = await KnitupProject.Load(pOFDBrowse.FileName);
+                    DisplayProject(pKPtProject);
+                }
+            }
         }
 
         #endregion
@@ -169,18 +186,7 @@ namespace Knitup
 
         private async void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog pOFDBrowse = new OpenFileDialog())
-            {
-                pOFDBrowse.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-                pOFDBrowse.Filter = "Knitup Projects (*.kup)|*.kup";
-                pOFDBrowse.Title = "Browse for Project...";
-                pOFDBrowse.Multiselect = false;
-                if (pOFDBrowse.ShowDialog() == DialogResult.OK)
-                {
-                    KnitupProject pKPtProject = await KnitupProject.Load(pOFDBrowse.FileName);
-                    DisplayProject(pKPtProject);
-                }
-            }
+            await OpenProject();
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -270,6 +276,21 @@ namespace Knitup
         private void chkGenerateTableOfContents_CheckedChanged(object sender, EventArgs e)
         {
             cKPtProject.Options.GenerateTableOfContents = chkGenerateTableOfContents.Checked;
+        }
+
+        private void tsbBuildWordDocument_Click(object sender, EventArgs e)
+        {
+            txtBuildOutput.Clear();
+            txtBuildOutput.AppendText("Starting Build.\r\n");
+            txtBuildOutput.AppendText("Generating Word document.\r\n");
+            cGenWordGenerator = cKPtProject.CreateWordGenerator();
+            cGenWordGenerator.GenerateProgress += CGenWordGenerator_GenerateProgress;
+            cGenWordGenerator.Generate();
+        }
+
+        private async void tsbFileOpen_Click(object sender, EventArgs e)
+        {
+            await OpenProject();
         }
 
         #endregion

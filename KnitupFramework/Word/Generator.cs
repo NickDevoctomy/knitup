@@ -209,7 +209,13 @@ namespace KnitupFramework.Word
                 pObjActiveRange.InsertAfter("Table Of Contents" + "\r\n");
                 Int32 pIntTOCEnd = pObjActiveRange.End;
                 pObjActiveRange.Start = pIntTOCStart;
-                pObjActiveRange.Style = String.Format("Heading 1");
+                
+                //we clone the heading 1 style here as otherwise it appears within the table
+                //of contents as the first page and I don't know how to add the heading into
+                //the toc itself, not as an entry.  So yeah, this is a bodge.
+                dynamic pObjStyle = pObjDoc.Styles.Add("Heading 1 Copy");
+                pObjStyle.Font = pObjDoc.Styles["Heading 1"].Font;
+                pObjActiveRange.Style = String.Format("Heading 1 Copy");
                 pObjActiveRange.Start = pIntTOCEnd;
 
                 pIntTOCStart = pObjActiveRange.End;
