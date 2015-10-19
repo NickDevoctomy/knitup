@@ -34,13 +34,21 @@
             this.scrInput = new System.Windows.Forms.SplitContainer();
             this.txtInput = new System.Windows.Forms.TextBox();
             this.tspInput = new System.Windows.Forms.ToolStrip();
+            this.tsbFileOpen = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbInputZoomIn = new System.Windows.Forms.ToolStripButton();
+            this.tsbInputZoomOut = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbInputPreview = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbBuildWordDocument = new System.Windows.Forms.ToolStripButton();
             this.wbrHTMLPreview = new System.Windows.Forms.WebBrowser();
             this.txtBuildOutput = new System.Windows.Forms.TextBox();
             this.tpeDesign = new System.Windows.Forms.TabPage();
+            this.picBackgroundImage = new System.Windows.Forms.PictureBox();
             this.lblBackgroundImage = new System.Windows.Forms.Label();
             this.lblCompanyLogo = new System.Windows.Forms.Label();
+            this.picCompanyLogo = new System.Windows.Forms.PictureBox();
             this.tpeOptions = new System.Windows.Forms.TabPage();
             this.chkGenerateTableOfContents = new System.Windows.Forms.CheckBox();
             this.txtCopyrightMessage = new System.Windows.Forms.TextBox();
@@ -61,14 +69,11 @@
             this.buildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wordDocumentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsbInputZoomIn = new System.Windows.Forms.ToolStripButton();
-            this.tsbInputZoomOut = new System.Windows.Forms.ToolStripButton();
-            this.tsbInputPreview = new System.Windows.Forms.ToolStripButton();
-            this.tsbBuildWordDocument = new System.Windows.Forms.ToolStripButton();
-            this.tsbFileOpen = new System.Windows.Forms.ToolStripButton();
-            this.picBackgroundImage = new System.Windows.Forms.PictureBox();
-            this.picCompanyLogo = new System.Windows.Forms.PictureBox();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.tpeImages = new System.Windows.Forms.TabPage();
+            this.tspImages = new System.Windows.Forms.ToolStrip();
+            this.lbxImages = new System.Windows.Forms.ListBox();
+            this.panPreview = new System.Windows.Forms.Panel();
+            this.picPreview = new System.Windows.Forms.PictureBox();
             this.tclMain.SuspendLayout();
             this.tpeInput.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scrBuild)).BeginInit();
@@ -81,10 +86,13 @@
             this.scrInput.SuspendLayout();
             this.tspInput.SuspendLayout();
             this.tpeDesign.SuspendLayout();
-            this.tpeOptions.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picCompanyLogo)).BeginInit();
+            this.tpeOptions.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
+            this.tpeImages.SuspendLayout();
+            this.panPreview.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picPreview)).BeginInit();
             this.SuspendLayout();
             // 
             // tclMain
@@ -92,6 +100,7 @@
             this.tclMain.Controls.Add(this.tpeInput);
             this.tclMain.Controls.Add(this.tpeDesign);
             this.tclMain.Controls.Add(this.tpeOptions);
+            this.tclMain.Controls.Add(this.tpeImages);
             this.tclMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tclMain.Location = new System.Drawing.Point(0, 33);
             this.tclMain.Name = "tclMain";
@@ -178,15 +187,70 @@
             this.tspInput.TabIndex = 1;
             this.tspInput.Text = "toolStrip1";
             // 
+            // tsbFileOpen
+            // 
+            this.tsbFileOpen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbFileOpen.Image = global::Knitup.Properties.Resources.Open_24;
+            this.tsbFileOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbFileOpen.Name = "tsbFileOpen";
+            this.tsbFileOpen.Size = new System.Drawing.Size(28, 28);
+            this.tsbFileOpen.Text = "Open...";
+            this.tsbFileOpen.Click += new System.EventHandler(this.tsbFileOpen_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 31);
+            // 
+            // tsbInputZoomIn
+            // 
+            this.tsbInputZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbInputZoomIn.Image = global::Knitup.Properties.Resources.Zoom_In_24;
+            this.tsbInputZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbInputZoomIn.Name = "tsbInputZoomIn";
+            this.tsbInputZoomIn.Size = new System.Drawing.Size(28, 28);
+            this.tsbInputZoomIn.Text = "Zoom In";
+            this.tsbInputZoomIn.Click += new System.EventHandler(this.tsbInputZoomIn_Click);
+            // 
+            // tsbInputZoomOut
+            // 
+            this.tsbInputZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbInputZoomOut.Image = global::Knitup.Properties.Resources.Zoom_Out_24;
+            this.tsbInputZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbInputZoomOut.Name = "tsbInputZoomOut";
+            this.tsbInputZoomOut.Size = new System.Drawing.Size(28, 28);
+            this.tsbInputZoomOut.Text = "Zoom Out";
+            this.tsbInputZoomOut.Click += new System.EventHandler(this.tsbInputZoomOut_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
             // 
+            // tsbInputPreview
+            // 
+            this.tsbInputPreview.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbInputPreview.Image = global::Knitup.Properties.Resources.Preview_24;
+            this.tsbInputPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbInputPreview.Name = "tsbInputPreview";
+            this.tsbInputPreview.Size = new System.Drawing.Size(28, 28);
+            this.tsbInputPreview.Text = "HTML Preview";
+            this.tsbInputPreview.Click += new System.EventHandler(this.tsbInputPreview_Click);
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 31);
+            // 
+            // tsbBuildWordDocument
+            // 
+            this.tsbBuildWordDocument.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbBuildWordDocument.Image = global::Knitup.Properties.Resources.Microsoft_Word_New_24;
+            this.tsbBuildWordDocument.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbBuildWordDocument.Name = "tsbBuildWordDocument";
+            this.tsbBuildWordDocument.Size = new System.Drawing.Size(28, 28);
+            this.tsbBuildWordDocument.Text = "Build Word Document";
+            this.tsbBuildWordDocument.Click += new System.EventHandler(this.tsbBuildWordDocument_Click);
             // 
             // wbrHTMLPreview
             // 
@@ -225,6 +289,18 @@
             this.tpeDesign.Text = "Design";
             this.tpeDesign.UseVisualStyleBackColor = true;
             // 
+            // picBackgroundImage
+            // 
+            this.picBackgroundImage.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.picBackgroundImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picBackgroundImage.Location = new System.Drawing.Point(329, 66);
+            this.picBackgroundImage.Name = "picBackgroundImage";
+            this.picBackgroundImage.Size = new System.Drawing.Size(181, 256);
+            this.picBackgroundImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picBackgroundImage.TabIndex = 4;
+            this.picBackgroundImage.TabStop = false;
+            this.picBackgroundImage.Click += new System.EventHandler(this.picBackgroundImage_Click);
+            // 
             // lblBackgroundImage
             // 
             this.lblBackgroundImage.AutoSize = true;
@@ -244,6 +320,18 @@
             this.lblCompanyLogo.Size = new System.Drawing.Size(128, 20);
             this.lblCompanyLogo.TabIndex = 1;
             this.lblCompanyLogo.Text = "Company Logo";
+            // 
+            // picCompanyLogo
+            // 
+            this.picCompanyLogo.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.picCompanyLogo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picCompanyLogo.Location = new System.Drawing.Point(27, 66);
+            this.picCompanyLogo.Name = "picCompanyLogo";
+            this.picCompanyLogo.Size = new System.Drawing.Size(256, 256);
+            this.picCompanyLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picCompanyLogo.TabIndex = 2;
+            this.picCompanyLogo.TabStop = false;
+            this.picCompanyLogo.Click += new System.EventHandler(this.picCompanyLogo_Click);
             // 
             // tpeOptions
             // 
@@ -412,84 +500,57 @@
             this.wordDocumentToolStripMenuItem.Text = "Word Document";
             this.wordDocumentToolStripMenuItem.Click += new System.EventHandler(this.wordDocumentToolStripMenuItem_Click);
             // 
-            // tsbInputZoomIn
+            // tpeImages
             // 
-            this.tsbInputZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbInputZoomIn.Image = global::Knitup.Properties.Resources.Zoom_In_24;
-            this.tsbInputZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbInputZoomIn.Name = "tsbInputZoomIn";
-            this.tsbInputZoomIn.Size = new System.Drawing.Size(28, 28);
-            this.tsbInputZoomIn.Text = "Zoom In";
-            this.tsbInputZoomIn.Click += new System.EventHandler(this.tsbInputZoomIn_Click);
+            this.tpeImages.Controls.Add(this.lbxImages);
+            this.tpeImages.Controls.Add(this.panPreview);
+            this.tpeImages.Controls.Add(this.tspImages);
+            this.tpeImages.Location = new System.Drawing.Point(4, 29);
+            this.tpeImages.Name = "tpeImages";
+            this.tpeImages.Size = new System.Drawing.Size(1270, 728);
+            this.tpeImages.TabIndex = 3;
+            this.tpeImages.Text = "Images";
+            this.tpeImages.UseVisualStyleBackColor = true;
             // 
-            // tsbInputZoomOut
+            // tspImages
             // 
-            this.tsbInputZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbInputZoomOut.Image = global::Knitup.Properties.Resources.Zoom_Out_24;
-            this.tsbInputZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbInputZoomOut.Name = "tsbInputZoomOut";
-            this.tsbInputZoomOut.Size = new System.Drawing.Size(28, 28);
-            this.tsbInputZoomOut.Text = "Zoom Out";
-            this.tsbInputZoomOut.Click += new System.EventHandler(this.tsbInputZoomOut_Click);
+            this.tspImages.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.tspImages.Location = new System.Drawing.Point(0, 0);
+            this.tspImages.Name = "tspImages";
+            this.tspImages.Size = new System.Drawing.Size(1270, 25);
+            this.tspImages.TabIndex = 0;
+            this.tspImages.Text = "toolStrip1";
             // 
-            // tsbInputPreview
+            // lbxImages
             // 
-            this.tsbInputPreview.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbInputPreview.Image = global::Knitup.Properties.Resources.Preview_24;
-            this.tsbInputPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbInputPreview.Name = "tsbInputPreview";
-            this.tsbInputPreview.Size = new System.Drawing.Size(28, 28);
-            this.tsbInputPreview.Text = "HTML Preview";
-            this.tsbInputPreview.Click += new System.EventHandler(this.tsbInputPreview_Click);
+            this.lbxImages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbxImages.FormattingEnabled = true;
+            this.lbxImages.ItemHeight = 20;
+            this.lbxImages.Location = new System.Drawing.Point(0, 25);
+            this.lbxImages.Name = "lbxImages";
+            this.lbxImages.Size = new System.Drawing.Size(703, 703);
+            this.lbxImages.TabIndex = 1;
             // 
-            // tsbBuildWordDocument
+            // panPreview
             // 
-            this.tsbBuildWordDocument.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbBuildWordDocument.Image = global::Knitup.Properties.Resources.Microsoft_Word_New_24;
-            this.tsbBuildWordDocument.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbBuildWordDocument.Name = "tsbBuildWordDocument";
-            this.tsbBuildWordDocument.Size = new System.Drawing.Size(28, 28);
-            this.tsbBuildWordDocument.Text = "Build Word Document";
-            this.tsbBuildWordDocument.Click += new System.EventHandler(this.tsbBuildWordDocument_Click);
+            this.panPreview.Controls.Add(this.picPreview);
+            this.panPreview.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panPreview.Location = new System.Drawing.Point(703, 25);
+            this.panPreview.Margin = new System.Windows.Forms.Padding(0);
+            this.panPreview.Name = "panPreview";
+            this.panPreview.Padding = new System.Windows.Forms.Padding(16);
+            this.panPreview.Size = new System.Drawing.Size(567, 703);
+            this.panPreview.TabIndex = 2;
             // 
-            // tsbFileOpen
+            // picPreview
             // 
-            this.tsbFileOpen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbFileOpen.Image = global::Knitup.Properties.Resources.Open_24;
-            this.tsbFileOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbFileOpen.Name = "tsbFileOpen";
-            this.tsbFileOpen.Size = new System.Drawing.Size(28, 28);
-            this.tsbFileOpen.Text = "Open...";
-            this.tsbFileOpen.Click += new System.EventHandler(this.tsbFileOpen_Click);
-            // 
-            // picBackgroundImage
-            // 
-            this.picBackgroundImage.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.picBackgroundImage.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBackgroundImage.Location = new System.Drawing.Point(329, 66);
-            this.picBackgroundImage.Name = "picBackgroundImage";
-            this.picBackgroundImage.Size = new System.Drawing.Size(181, 256);
-            this.picBackgroundImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picBackgroundImage.TabIndex = 4;
-            this.picBackgroundImage.TabStop = false;
-            this.picBackgroundImage.Click += new System.EventHandler(this.picBackgroundImage_Click);
-            // 
-            // picCompanyLogo
-            // 
-            this.picCompanyLogo.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.picCompanyLogo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picCompanyLogo.Location = new System.Drawing.Point(27, 66);
-            this.picCompanyLogo.Name = "picCompanyLogo";
-            this.picCompanyLogo.Size = new System.Drawing.Size(256, 256);
-            this.picCompanyLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picCompanyLogo.TabIndex = 2;
-            this.picCompanyLogo.TabStop = false;
-            this.picCompanyLogo.Click += new System.EventHandler(this.picCompanyLogo_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 31);
+            this.picPreview.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.picPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picPreview.Location = new System.Drawing.Point(16, 16);
+            this.picPreview.Name = "picPreview";
+            this.picPreview.Size = new System.Drawing.Size(535, 671);
+            this.picPreview.TabIndex = 3;
+            this.picPreview.TabStop = false;
             // 
             // frmMain
             // 
@@ -516,12 +577,16 @@
             this.tspInput.PerformLayout();
             this.tpeDesign.ResumeLayout(false);
             this.tpeDesign.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picBackgroundImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCompanyLogo)).EndInit();
             this.tpeOptions.ResumeLayout(false);
             this.tpeOptions.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picBackgroundImage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picCompanyLogo)).EndInit();
+            this.tpeImages.ResumeLayout(false);
+            this.tpeImages.PerformLayout();
+            this.panPreview.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picPreview)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -570,6 +635,11 @@
         private System.Windows.Forms.ToolStripButton tsbBuildWordDocument;
         private System.Windows.Forms.ToolStripButton tsbFileOpen;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.TabPage tpeImages;
+        private System.Windows.Forms.ToolStrip tspImages;
+        private System.Windows.Forms.Panel panPreview;
+        private System.Windows.Forms.PictureBox picPreview;
+        private System.Windows.Forms.ListBox lbxImages;
     }
 }
 

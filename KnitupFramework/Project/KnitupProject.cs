@@ -26,6 +26,7 @@ namespace KnitupFramework.Project
         private String cStrMarkdownSource = String.Empty;
         private ProjectInfo cPIoInfo;
         private ProjectOptions cPOsOptions;
+        private ProjectImages cPIsImages;
         private Boolean cBlnIsDirty = true;
 
         #endregion
@@ -65,6 +66,11 @@ namespace KnitupFramework.Project
             get { return (cPOsOptions); }
         }
 
+        public ProjectImages Images
+        {
+            get { return (cPIsImages); }
+        }
+
         public Boolean IsDirty
         {
             get { return (cBlnIsDirty); }
@@ -81,6 +87,9 @@ namespace KnitupFramework.Project
 
             cPOsOptions = new ProjectOptions();
             cPOsOptions.PropertyChanged += CPOsOptions_PropertyChanged;
+
+            cPIsImages = new ProjectImages();
+            cPIsImages.PropertyChanged += CPIsImages_PropertyChanged;
         }
 
         #endregion
@@ -109,6 +118,7 @@ namespace KnitupFramework.Project
 
                     pKPtProject.Info.Load(pZAeArchive);
                     pKPtProject.Options.Load(pZAeArchive);
+                    pKPtProject.Images.Load(pZAeArchive);
 
                     return (pKPtProject);
                 }
@@ -132,6 +142,7 @@ namespace KnitupFramework.Project
 
                     await Info.Save(pZAeArchive);
                     await Options.Save(pZAeArchive);
+                    await Images.Save(pZAeArchive);
 
                     if(iClean) cBlnIsDirty = false;
                     cStrFullPath = iFullPath;
@@ -171,6 +182,12 @@ namespace KnitupFramework.Project
         {
             cBlnIsDirty = true;
             NotifyPropertyChanged("Options");
+        }
+
+        private void CPIsImages_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            cBlnIsDirty = true;
+            NotifyPropertyChanged("Images");
         }
 
         #endregion

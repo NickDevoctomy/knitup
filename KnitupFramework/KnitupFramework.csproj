@@ -52,6 +52,7 @@
     <Compile Include="Markdown\Parser.cs" />
     <Compile Include="Markdown\Section.cs" />
     <Compile Include="Project\KnitupProject.cs" />
+    <Compile Include="Project\ProjectImages.cs" />
     <Compile Include="Project\ProjectInfo.cs" />
     <Compile Include="Project\ProjectOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

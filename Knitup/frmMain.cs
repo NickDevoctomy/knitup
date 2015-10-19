@@ -228,7 +228,7 @@ namespace Knitup
                 pOFDBrowse.Multiselect = false;
                 if (pOFDBrowse.ShowDialog() == DialogResult.OK)
                 {
-                    Image pImgBackground = DrawingUtility.CreateThumbnail(pOFDBrowse.FileName, 1358, 1920, Color.White);
+                    Image pImgBackground = DrawingUtility.ResizeImage(pOFDBrowse.FileName, 1358, 1920, true);
                     picBackgroundImage.Image = pImgBackground;
                     cKPtProject.Info.BackgroundImage = pImgBackground;
                 }
