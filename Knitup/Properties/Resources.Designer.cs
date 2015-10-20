@@ -93,9 +93,29 @@ namespace Knitup.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Photograph_24 {
+            get {
+                object obj = ResourceManager.GetObject("Photograph_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Preview_24 {
             get {
                 object obj = ResourceManager.GetObject("Preview_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Recycle_Bin_24 {
+            get {
+                object obj = ResourceManager.GetObject("Recycle_Bin_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

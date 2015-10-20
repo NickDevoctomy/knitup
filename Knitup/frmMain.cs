@@ -55,6 +55,13 @@ namespace Knitup
             txtCopyrightMessage.Text = cKPtProject.Options.CopyrightMessage;
             chkGenerateTableOfContents.Checked = cKPtProject.Options.GenerateTableOfContents;
 
+            //Images
+            lbxImages.Items.Clear();
+            foreach(String curImageKey in cKPtProject.Images.Images.Keys)
+            {
+                lbxImages.Items.Add(curImageKey.Replace("images\\", String.Empty));
+            }
+
             UpdateSaveState();
             cKPtProject.PropertyChanged += CKPtProject_PropertyChanged;
         }
@@ -291,6 +298,65 @@ namespace Knitup
         private async void tsbFileOpen_Click(object sender, EventArgs e)
         {
             await OpenProject();
+        }
+
+        private void tsbAddImage_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog pOFDBrowse = new OpenFileDialog())
+            {
+                pOFDBrowse.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+                pOFDBrowse.Filter = "Supported Image Files (*.jpg)|*.jpg";
+                pOFDBrowse.Title = "Browse For Background Image...";
+                pOFDBrowse.Multiselect = false;
+                if (pOFDBrowse.ShowDialog() == DialogResult.OK)
+                {
+                    Image pImgImage = Image.FromFile(pOFDBrowse.FileName);
+                    String pStrKey = Guid.NewGuid().ToString();
+                    cKPtProject.Images.AddImage(pStrKey, pImgImage);
+                    lbxImages.Items.Add(pStrKey);
+                }
+            }
+        }
+
+        private void lbxImages_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbxImages.SelectedIndex > -1)
+            {
+                String pStrKey = lbxImages.SelectedItem.ToString();
+                picPreview.Image = cKPtProject.Images.Images["images\\" + pStrKey];
+            }
+        }
+
+        private void tsbRemoveImage_Click(object sender, EventArgs e)
+        {
+            if (lbxImages.SelectedIndex > -1)
+            {
+                String pStrKey = lbxImages.SelectedItem.ToString();
+                cKPtProject.Images.RemoveImage("images\\" + pStrKey);
+                lbxImages.Items.Remove(pStrKey);
+                picPreview.Image = null;
+            }
+        }
+
+        private void tsbInsertImage_Click(object sender, EventArgs e)
+        {
+            if (cKPtProject.Images.Images.Count > 0)
+            {
+                using (frmSelectProjectImage pSPISelect = new frmSelectProjectImage())
+                {
+                    pSPISelect.Images = cKPtProject.Images;
+                    if (pSPISelect.ShowDialog() == DialogResult.OK)
+                    {
+                        String pStrImage = String.Format("![{0}]({1})", "Caption For Your Image Goes Here", "images\\" + pSPISelect.SelectedImageKey);
+                        txtInput.Text = txtInput.Text.Insert(txtInput.SelectionStart, pStrImage);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("You must first add an image to the project through the 'images' tab.", 
+                    "Insert Image");
+            }
         }
 
         #endregion

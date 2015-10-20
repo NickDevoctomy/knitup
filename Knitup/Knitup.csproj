@@ -52,6 +52,12 @@
     <Compile Include="Dialogs\dlgSettings.Designer.cs">
       <DependentUpon>dlgSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\frmSelectProjectImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\frmSelectProjectImage.Designer.cs">
+      <DependentUpon>frmSelectProjectImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +68,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Dialogs\dlgSettings.resx">
       <DependentUpon>dlgSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\frmSelectProjectImage.resx">
+      <DependentUpon>frmSelectProjectImage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
@@ -106,6 +115,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Open_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Photograph_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Recycle-Bin_24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
