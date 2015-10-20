@@ -26,7 +26,8 @@ namespace KnitupFramework.Markdown
             listitemstart = 8,
             listitem = 9,
             listitemend = 10,
-            blank = 11
+            image = 11,
+            blank = 12
         }
 
         #endregion
@@ -78,7 +79,11 @@ namespace KnitupFramework.Markdown
                 if(pIntTokenEnd > -1)
                 {
                     String pStrToken = pStrLine.Substring(0, pIntTokenEnd);
-                    if (pStrToken.StartsWith("#"))
+                    if (pStrToken.StartsWith("!"))
+                    {
+                       return (LineType.image);
+                    }
+                    else if (pStrToken.StartsWith("#"))
                     {
                         String pStrHeadingType = String.Format("heading{0}", pStrToken.Length);
                         LineType pLTeType = (LineType)Enum.Parse(typeof(LineType), pStrHeadingType);
@@ -234,6 +239,11 @@ namespace KnitupFramework.Markdown
                             case LineType.listitem:
                             case LineType.listitemend:
                             case LineType.listitemstart:
+                                {
+                                    pSecCurParentSection.SubItems.Add(pPImCurItem);
+                                    break;
+                                }
+                            case LineType.image:
                                 {
                                     pSecCurParentSection.SubItems.Add(pPImCurItem);
                                     break;

@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Drawing;
 using KnitupFramework.Project;
 using System.IO;
+using System.Windows.Forms;
 
 namespace KnitupFramework.Word
 {
@@ -93,6 +94,13 @@ namespace KnitupFramework.Word
             String pStrBackgroundTemp = Path.GetTempFileName();
             cKPtProject.Info.BackgroundImage.Save(pStrBackgroundTemp, System.Drawing.Imaging.ImageFormat.Jpeg);
             pDicIntermediateFiles.Add("background", pStrBackgroundTemp);
+
+            //foreach (String curImageKey in Project.Images.Images.Keys)
+            //{
+            //    String pStrImageTemp = Path.GetTempFileName();
+            //    cKPtProject.Images.Images[curImageKey].Save(pStrImageTemp, System.Drawing.Imaging.ImageFormat.Jpeg);
+            //    pDicIntermediateFiles.Add(curImageKey, pStrImageTemp);
+            //}
 
             RaiseGenerateProgress(GeneratorGenerateEventArgs.ProgressCounterType.indeterminate, 0, 0, "Initialising Microsoft Word automation.", "");
             dynamic pObjApp = null;
@@ -305,6 +313,27 @@ namespace KnitupFramework.Word
                                     case Parser.LineType.blank:
                                         {
                                             pObjActiveRange.InsertAfter("\r\n");
+                                            break;
+                                        }
+                                    case Parser.LineType.image:
+                                        {
+                                            String pStrImage = curSubItem.Line;
+                                            Int32 pIntStartKey = pStrImage.IndexOf('(');
+                                            Int32 pIntEndKey = pStrImage.IndexOf(')');
+                                            Int32 pInLength = (pIntEndKey - pIntStartKey);
+                                            String pStrKey = pStrImage.Substring(pIntStartKey + 1, pInLength - 1);
+
+                                            pIntStart = pObjActiveRange.End;
+                                            pObjActiveRange.InsertAfter(String.Empty);
+                                            pIntEnd = pObjActiveRange.End;
+                                            pObjActiveRange.Start = pIntStart;
+
+                                            Clipboard.SetImage(Project.Images.Images[pStrKey]);
+                                            pObjActiveRange.Paste();
+
+                                            pObjActiveRange.Start = pIntEnd;
+
+
                                             break;
                                         }
                                 }

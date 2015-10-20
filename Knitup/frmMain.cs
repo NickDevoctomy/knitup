@@ -359,6 +359,11 @@ namespace Knitup
             }
         }
 
+        private void txtInput_TextChanged(object sender, EventArgs e)
+        {
+            cKPtProject.MarkdownSource = txtInput.Text;
+        }
+
         #endregion
 
     }
