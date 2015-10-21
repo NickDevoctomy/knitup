@@ -327,11 +327,11 @@ namespace KnitupFramework.Word
                                             pObjActiveRange.InsertAfter(String.Empty);
                                             pIntEnd = pObjActiveRange.End;
                                             pObjActiveRange.Start = pIntStart;
-
                                             Clipboard.SetImage(Project.Images.Images[pStrKey]);
                                             pObjActiveRange.Paste();
-
                                             pObjActiveRange.Start = pIntEnd;
+
+                                            Clipboard.Clear();
 
 
                                             break;

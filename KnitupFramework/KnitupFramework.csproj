@@ -48,7 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Drawing\DrawingUtility.cs" />
+    <Compile Include="Extensions\FileExtensionCollectionExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="IO\FileExtensionGroup.cs" />
+    <Compile Include="IO\FileExtension.cs" />
+    <Compile Include="IO\FileExtensionCollection.cs" />
+    <Compile Include="IO\FileExtensionUtility.cs" />
     <Compile Include="Markdown\ParsedItem.cs" />
     <Compile Include="Markdown\Parser.cs" />
     <Compile Include="Markdown\Section.cs" />

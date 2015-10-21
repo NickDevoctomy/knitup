@@ -1,12 +1,6 @@
-﻿using KnitupFramework.Markdown;
-using KnitupFramework.Word;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
+using KnitupFramework.IO;
 
 namespace Knitup
 {
@@ -18,10 +12,25 @@ namespace Knitup
         [STAThread]
         static void Main()
         {
-            //String[] pStrMarkdownLines = File.ReadAllLines(@"C:\Users\nickp\Dropbox\Mum\Remastered\Nativity_2015_v1.0.md");
-            //Parser pParParser = Parser.Parse(pStrMarkdownLines);
-            //Generator pGenGenerator = new Generator(pParParser);
-            //pGenGenerator.Generate();
+            //"Text files (*.txt)|*.txt|All files (*.*)|*.*"
+
+            //All Suppoprted Image Types (*.bmp,*.gif,*.jpeg,*.jpg,*.png)|*.bmp,*.gif,*.jpeg,*.jpg,*.png|
+            //BMP Image (*.bmp)|*.bmp|
+            //GIF Image (*.gif)|*.gif|
+            //JPEG Image (*.jpeg)|*.jpeg|
+            //JPG Image (*.jpg)|*.jpg|
+            //PNG Image (*.png)|*.png
+
+            string pants = FileExtensionUtility.GetFileExtensionFilterString(FileExtensionCollection.EXTENSION_COLLECTION_IMAGE_ALL,
+                true,
+                true);
+
+            using (OpenFileDialog pop = new OpenFileDialog())
+            {
+                pop.Filter = pants;
+                pop.ShowDialog();
+            }
+            return;
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
