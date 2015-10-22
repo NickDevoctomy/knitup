@@ -19,6 +19,9 @@ namespace Knitup
 
         KnitupProject cKPtProject;
         Generator cGenWordGenerator = null;
+        System.Timers.Timer cTimPreviewTimer;
+        Point cPntMousePos = Point.Empty;
+        dlgImaePreviewPopup cDlgPreviewPopup;
 
         #endregion
 
@@ -27,6 +30,8 @@ namespace Knitup
         public frmMain()
         {
             InitializeComponent();
+            cTimPreviewTimer = new System.Timers.Timer(250);
+            cTimPreviewTimer.Elapsed += CTimPreviewTimer_Elapsed;
             ApplySettings();
             DisplayProject(new KnitupProject());
         }
@@ -340,7 +345,7 @@ namespace Knitup
         {
             if (cKPtProject.Images.Images.Count > 0)
             {
-                using (frmSelectProjectImage pSPISelect = new frmSelectProjectImage())
+                using (dlgSelectProjectImage pSPISelect = new dlgSelectProjectImage())
                 {
                     pSPISelect.Images = cKPtProject.Images;
                     if (pSPISelect.ShowDialog() == DialogResult.OK)
@@ -360,6 +365,67 @@ namespace Knitup
         private void txtInput_TextChanged(object sender, EventArgs e)
         {
             cKPtProject.MarkdownSource = txtInput.Text;
+        }
+
+        private void CTimPreviewTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            cTimPreviewTimer.Stop();
+            Invoke(new MethodInvoker(delegate() {
+                if(!String.IsNullOrEmpty(txtInput.Text))
+                {
+                    Int32 pIntCharIndex = txtInput.GetCharIndexFromPosition(cPntMousePos);
+                    Int32 pIntLine = txtInput.GetLineFromCharIndex(pIntCharIndex);
+                    Int32 pIntStart = txtInput.GetFirstCharIndexFromLine(pIntLine);
+                    Int32 pIntEnd = txtInput.Text.IndexOf("\r", pIntStart);
+                    String pStrLine = txtInput.Text.Substring(pIntStart, pIntEnd - pIntStart);
+
+                    Int32 pIntStartKey = pStrLine.IndexOf('(');
+                    Int32 pIntEndKey = pStrLine.IndexOf(')');
+                    if(pIntStartKey > -1 && pIntEndKey > pIntStartKey)
+                    {
+                        Int32 pInLength = (pIntEndKey - pIntStartKey);
+                        String pStrKey = pStrLine.Substring(pIntStartKey + 1, pInLength - 1);
+
+                        if (cDlgPreviewPopup != null)
+                        {
+                            cDlgPreviewPopup.Dispose();
+                            cDlgPreviewPopup = null;
+                        }
+                        cDlgPreviewPopup = new dlgImaePreviewPopup();
+                        cDlgPreviewPopup.Opacity = 0.75f;
+                        cDlgPreviewPopup.TopMost = true;
+                        cDlgPreviewPopup.StartPosition = FormStartPosition.Manual;
+                        cDlgPreviewPopup.Location = txtInput.PointToScreen(cPntMousePos);
+                        Image pImgThumb = DrawingUtility.LowQualityScaledThumbnail(cKPtProject.Images.Images[pStrKey].Image,
+                            200,
+                            200);
+                        cDlgPreviewPopup.Image = pImgThumb;
+                        cDlgPreviewPopup.Show();
+                        cDlgPreviewPopup.Size = new Size(pImgThumb.Width, pImgThumb.Height);
+                        cDlgPreviewPopup.StartAutoClose();
+                    }
+                }
+            }));
+        }
+
+        private void txtInput_MouseLeave(object sender, EventArgs e)
+        {
+            cTimPreviewTimer.Stop();
+        }
+
+        private void txtInput_MouseMove(object sender, MouseEventArgs e)
+        {
+            cTimPreviewTimer.Stop();
+            if(e.Location != cPntMousePos)
+            {
+                if (cDlgPreviewPopup != null)
+                {
+                    cDlgPreviewPopup.Dispose();
+                    cDlgPreviewPopup = null;
+                }
+                cPntMousePos = e.Location;
+                cTimPreviewTimer.Start();
+            }
         }
 
         #endregion

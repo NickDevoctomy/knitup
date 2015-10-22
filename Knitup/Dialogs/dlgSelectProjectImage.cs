@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace Knitup.Dialogs
 {
 
-    public partial class frmSelectProjectImage : Form
+    public partial class dlgSelectProjectImage : Form
     {
 
         #region private objects
@@ -42,7 +42,7 @@ namespace Knitup.Dialogs
 
         #region constructor / destructor
 
-        public frmSelectProjectImage()
+        public dlgSelectProjectImage()
         {
             InitializeComponent();
         }

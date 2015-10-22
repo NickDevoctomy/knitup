@@ -1,6 +1,6 @@
 ﻿namespace Knitup.Dialogs
 {
-    partial class frmSelectProjectImage
+    partial class dlgSelectProjectImage
     {
         /// <summary>
         /// Required designer variable.

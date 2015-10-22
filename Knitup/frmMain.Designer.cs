@@ -174,6 +174,8 @@
             this.txtInput.Size = new System.Drawing.Size(1264, 330);
             this.txtInput.TabIndex = 0;
             this.txtInput.TextChanged += new System.EventHandler(this.txtInput_TextChanged);
+            this.txtInput.MouseLeave += new System.EventHandler(this.txtInput_MouseLeave);
+            this.txtInput.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtInput_MouseMove);
             // 
             // tspInput
             // 

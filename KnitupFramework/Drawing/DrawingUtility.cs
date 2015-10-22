@@ -107,6 +107,24 @@ namespace KnitupFramework.Drawing
             return (pBmpRescaled);
         }
 
+        public static Image LowQualityScaledThumbnail(Image iImage,
+            Int32 iMaxWidth,
+            Int32 iMaxHeight)
+        {
+            Double pDblRatio = 0;
+            if (iImage.Width > iImage.Height)
+            {
+                pDblRatio = (Double)iMaxWidth / iImage.Width;
+            }
+            else
+            {
+                pDblRatio = (Double)iMaxHeight / iImage.Height;
+            }
+            Double pDblRescaledWidth = iImage.Width * pDblRatio;
+            Double pDblRescaledHeight = iImage.Height * pDblRatio;
+            return (iImage.GetThumbnailImage((Int32)pDblRescaledWidth, (Int32)pDblRescaledHeight, null, IntPtr.Zero));
+        }
+
     }
 
 }

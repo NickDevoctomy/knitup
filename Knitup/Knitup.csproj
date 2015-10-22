@@ -46,17 +46,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dialogs\dlgImaePreviewPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\dlgImaePreviewPopup.Designer.cs">
+      <DependentUpon>dlgImaePreviewPopup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\dlgSettings.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dialogs\dlgSettings.Designer.cs">
       <DependentUpon>dlgSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\frmSelectProjectImage.cs">
+    <Compile Include="Dialogs\dlgSelectProjectImage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\frmSelectProjectImage.Designer.cs">
-      <DependentUpon>frmSelectProjectImage.cs</DependentUpon>
+    <Compile Include="Dialogs\dlgSelectProjectImage.Designer.cs">
+      <DependentUpon>dlgSelectProjectImage.cs</DependentUpon>
     </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
@@ -66,11 +72,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Dialogs\dlgImaePreviewPopup.resx">
+      <DependentUpon>dlgImaePreviewPopup.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\dlgSettings.resx">
       <DependentUpon>dlgSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\frmSelectProjectImage.resx">
-      <DependentUpon>frmSelectProjectImage.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\dlgSelectProjectImage.resx">
+      <DependentUpon>dlgSelectProjectImage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
