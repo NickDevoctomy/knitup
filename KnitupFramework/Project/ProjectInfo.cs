@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KnitupFramework.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -93,7 +94,7 @@ namespace KnitupFramework.Project
                 ZipArchiveEntry pZAELogo = iArchive.CreateEntry("logo.jpg", CompressionLevel.Optimal);
                 using (Stream pStmLogo = pZAELogo.Open())
                 {
-                    CompanyLogo.Save(pStmLogo, System.Drawing.Imaging.ImageFormat.Jpeg);    //TODO min compression
+                    await CompanyLogo.ToStreamMaxJPEGAsync(pStmLogo);
                     await pStmLogo.FlushAsync();
                 }
             }
@@ -103,7 +104,7 @@ namespace KnitupFramework.Project
                 ZipArchiveEntry pZAEBackground = iArchive.CreateEntry("background.jpg", CompressionLevel.Optimal);
                 using (Stream pStmBackgroundImage = pZAEBackground.Open())
                 {
-                    BackgroundImage.Save(pStmBackgroundImage, System.Drawing.Imaging.ImageFormat.Jpeg);    //TODO min compression
+                    await BackgroundImage.ToStreamMaxJPEGAsync(pStmBackgroundImage);
                     await pStmBackgroundImage.FlushAsync();
                 }
             }

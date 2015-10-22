@@ -1,8 +1,10 @@
 ﻿using Knitup.Dialogs;
 using KnitupFramework.Drawing;
+using KnitupFramework.IO;
 using KnitupFramework.Project;
 using KnitupFramework.Word;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
@@ -57,9 +59,9 @@ namespace Knitup
 
             //Images
             lbxImages.Items.Clear();
-            foreach(String curImageKey in cKPtProject.Images.Images.Keys)
+            foreach(ProjectImage curImage in cKPtProject.Images.Images.Values)
             {
-                lbxImages.Items.Add(curImageKey.Replace("images\\", String.Empty));
+                lbxImages.Items.Add(curImage);
             }
 
             UpdateSaveState();
@@ -81,17 +83,14 @@ namespace Knitup
 
         private async Task OpenProject()
         {
-            using (OpenFileDialog pOFDBrowse = new OpenFileDialog())
+            List<String> pLisImages = null;
+            if (FileExtensionUtility.GetImageFileNameFromDialog(FileExtensionCollection.EXTENSION_COLLECTION_KNITUP_PROJECT,
+                "Browse For Knitup Project...",
+                out pLisImages,
+                false))
             {
-                pOFDBrowse.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-                pOFDBrowse.Filter = "Knitup Projects (*.kup)|*.kup";
-                pOFDBrowse.Title = "Browse for Project...";
-                pOFDBrowse.Multiselect = false;
-                if (pOFDBrowse.ShowDialog() == DialogResult.OK)
-                {
-                    KnitupProject pKPtProject = await KnitupProject.Load(pOFDBrowse.FileName);
-                    DisplayProject(pKPtProject);
-                }
+                KnitupProject pKPtProject = await KnitupProject.Load(pLisImages[0]);
+                DisplayProject(pKPtProject);
             }
         }
 
@@ -134,18 +133,15 @@ namespace Knitup
 
         private void markdownToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog pOFDBrowse = new OpenFileDialog())
+            List<String> pLisImages = null;
+            if (FileExtensionUtility.GetImageFileNameFromDialog(FileExtensionCollection.EXTENSION_COLLECTION_IMPORT_DOCUMENT,
+                "Browse For Document To Import...",
+                out pLisImages,
+                false))
             {
-                pOFDBrowse.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-                pOFDBrowse.Filter = "Markdown Files (*.md)|*.md";
-                pOFDBrowse.Title = "Browse For Document To Import...";
-                pOFDBrowse.Multiselect = false;
-                if (pOFDBrowse.ShowDialog() == DialogResult.OK)
-                {
-                    KnitupProject pKPtProject = new KnitupProject();
-                    pKPtProject.MarkdownSource = File.ReadAllText(pOFDBrowse.FileName);
-                    DisplayProject(pKPtProject);
-                }
+                KnitupProject pKPtProject = new KnitupProject();
+                pKPtProject.MarkdownSource = File.ReadAllText(pLisImages[0]);
+                DisplayProject(pKPtProject);
             }
         }
 
@@ -176,18 +172,26 @@ namespace Knitup
 
         private async void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog pSFDSave = new SaveFileDialog())
+            if (String.IsNullOrEmpty(cKPtProject.FullPath))
             {
-                pSFDSave.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-                pSFDSave.Filter = "Knitup Projects (*.kup)|*.kup";
-                pSFDSave.Title = "Save Project As...";
-                pSFDSave.AddExtension = true;
-                pSFDSave.OverwritePrompt = true;
-                if (pSFDSave.ShowDialog() == DialogResult.OK)
+                using (SaveFileDialog pSFDSave = new SaveFileDialog())
                 {
-                    await cKPtProject.Save(pSFDSave.FileName, false);
-                    UpdateSaveState();
+                    pSFDSave.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+                    pSFDSave.Filter = "Knitup Projects (*.kup)|*.kup";
+                    pSFDSave.Title = "Save Project...";
+                    pSFDSave.AddExtension = true;
+                    pSFDSave.OverwritePrompt = true;
+                    if (pSFDSave.ShowDialog() == DialogResult.OK)
+                    {
+                        await cKPtProject.Save(pSFDSave.FileName, true);
+                        UpdateSaveState();
+                    }
                 }
+            }
+            else
+            {
+                await cKPtProject.Save(cKPtProject.FullPath, true);
+                UpdateSaveState();
             }
         }
 
@@ -210,35 +214,29 @@ namespace Knitup
 
         private void picCompanyLogo_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog pOFDBrowse = new OpenFileDialog())
+            List<String> pLisImages = null;
+            if (FileExtensionUtility.GetImageFileNameFromDialog(FileExtensionCollection.EXTENSION_COLLECTION_IMAGE_ALL,
+                "Browse For Company Logo...",
+                out pLisImages,
+                false))
             {
-                pOFDBrowse.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-                pOFDBrowse.Filter = "Supported Image Files (*.jpg)|*.jpg";
-                pOFDBrowse.Title = "Browse For Company Logo...";
-                pOFDBrowse.Multiselect = false;
-                if (pOFDBrowse.ShowDialog() == DialogResult.OK)
-                {
-                    Image pImgLogo = DrawingUtility.CreateThumbnail(pOFDBrowse.FileName, 512, 512, Color.White);
-                    picCompanyLogo.Image = pImgLogo;
-                    cKPtProject.Info.CompanyLogo = pImgLogo;
-                }
+                Image pImgLogo = DrawingUtility.CreateThumbnail(pLisImages[0], 512, 512, Color.White);
+                picCompanyLogo.Image = pImgLogo;
+                cKPtProject.Info.CompanyLogo = pImgLogo;
             }
         }
 
         private void picBackgroundImage_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog pOFDBrowse = new OpenFileDialog())
+            List<String> pLisImages = null;
+            if (FileExtensionUtility.GetImageFileNameFromDialog(FileExtensionCollection.EXTENSION_COLLECTION_IMAGE_ALL,
+                "Browse For Background Image...",
+                out pLisImages,
+                false))
             {
-                pOFDBrowse.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-                pOFDBrowse.Filter = "Supported Image Files (*.jpg)|*.jpg";
-                pOFDBrowse.Title = "Browse For Background Image...";
-                pOFDBrowse.Multiselect = false;
-                if (pOFDBrowse.ShowDialog() == DialogResult.OK)
-                {
-                    Image pImgBackground = DrawingUtility.ResizeImage(pOFDBrowse.FileName, 1358, 1920, true);
-                    picBackgroundImage.Image = pImgBackground;
-                    cKPtProject.Info.BackgroundImage = pImgBackground;
-                }
+                Image pImgBackground = DrawingUtility.ResizeImage(pLisImages[0], 1358, 1920, true);
+                picBackgroundImage.Image = pImgBackground;
+                cKPtProject.Info.BackgroundImage = pImgBackground;
             }
         }
 
@@ -250,7 +248,7 @@ namespace Knitup
 
         private void CKPtProject_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            //update title bar to reflect if isdirty or not
+            UpdateSaveState();
         }
 
         private void txtCopyrightMessage_TextChanged(object sender, EventArgs e)
@@ -302,18 +300,18 @@ namespace Knitup
 
         private void tsbAddImage_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog pOFDBrowse = new OpenFileDialog())
+            List<String> pLisImages = null;
+            if(FileExtensionUtility.GetImageFileNameFromDialog(FileExtensionCollection.EXTENSION_COLLECTION_IMAGE_ALL,
+                "Browse For Image...",
+                out pLisImages,
+                true))
             {
-                pOFDBrowse.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-                pOFDBrowse.Filter = "Supported Image Files (*.jpg)|*.jpg";
-                pOFDBrowse.Title = "Browse For Background Image...";
-                pOFDBrowse.Multiselect = false;
-                if (pOFDBrowse.ShowDialog() == DialogResult.OK)
+                foreach (String curImage in pLisImages)
                 {
-                    Image pImgImage = Image.FromFile(pOFDBrowse.FileName);
-                    String pStrKey = Guid.NewGuid().ToString();
-                    cKPtProject.Images.AddImage(pStrKey, pImgImage);
-                    lbxImages.Items.Add(pStrKey);
+                    Image pImgImage = Image.FromFile(curImage);
+                    String pStrName = Path.GetFileNameWithoutExtension(new FileInfo(curImage).Name);
+                    ProjectImage pPIeImage = cKPtProject.Images.AddImage(pStrName, pImgImage);
+                    lbxImages.Items.Add(pPIeImage);
                 }
             }
         }
@@ -322,8 +320,8 @@ namespace Knitup
         {
             if (lbxImages.SelectedIndex > -1)
             {
-                String pStrKey = lbxImages.SelectedItem.ToString();
-                picPreview.Image = cKPtProject.Images.Images["images\\" + pStrKey];
+                ProjectImage pPIeImage = (ProjectImage)lbxImages.SelectedItem;
+                picPreview.Image = cKPtProject.Images.Images[pPIeImage.ID].Image;
             }
         }
 
@@ -331,9 +329,9 @@ namespace Knitup
         {
             if (lbxImages.SelectedIndex > -1)
             {
-                String pStrKey = lbxImages.SelectedItem.ToString();
-                cKPtProject.Images.RemoveImage("images\\" + pStrKey);
-                lbxImages.Items.Remove(pStrKey);
+                ProjectImage pPIeImage = (ProjectImage)lbxImages.SelectedItem;
+                cKPtProject.Images.RemoveImage(pPIeImage.ID);
+                lbxImages.Items.Remove(pPIeImage);
                 picPreview.Image = null;
             }
         }
@@ -347,7 +345,7 @@ namespace Knitup
                     pSPISelect.Images = cKPtProject.Images;
                     if (pSPISelect.ShowDialog() == DialogResult.OK)
                     {
-                        String pStrImage = String.Format("![{0}]({1})", "Caption For Your Image Goes Here", "images\\" + pSPISelect.SelectedImageKey);
+                        String pStrImage = String.Format("![{0}]({1})", "Caption For Your Image Goes Here", pSPISelect.SelectedImageID);
                         txtInput.Text = txtInput.Text.Insert(txtInput.SelectionStart, pStrImage);
                     }
                 }

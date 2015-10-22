@@ -50,7 +50,11 @@ namespace KnitupFramework.Project
                 if(cStrMarkdownSource != value)
                 {
                     cStrMarkdownSource = value;
-                    cBlnIsDirty = true;
+                    if(!cBlnIsDirty)
+                    {
+                        //increment version number here
+                        cBlnIsDirty = true;
+                    }
                     NotifyPropertyChanged("MarkdownSource");
                 }
             }

@@ -9,6 +9,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KnitupFramework.Extensions;
 
 namespace KnitupFramework.Project
 {
@@ -24,13 +25,13 @@ namespace KnitupFramework.Project
 
         #region private objects
 
-        private Dictionary<String, Image> cDicImages;
+        private Dictionary<String, ProjectImage> cDicImages;
 
         #endregion
 
         #region public properties
 
-        public IReadOnlyDictionary<String, Image> Images
+        public IReadOnlyDictionary<String, ProjectImage> Images
         {
             get { return (cDicImages); }
         }
@@ -41,18 +42,20 @@ namespace KnitupFramework.Project
 
         public ProjectImages()
         {
-            cDicImages = new Dictionary<String, Image>();
+            cDicImages = new Dictionary<String, ProjectImage>();
         }
 
         #endregion
 
         #region public methods
 
-        public void AddImage(String iID,
+        public ProjectImage AddImage(String iName,
             Image iImage)
         {
-            cDicImages.Add("images\\" + iID, iImage);
+            ProjectImage pPIeImage = new ProjectImage(iName, iImage);
+            cDicImages.Add(pPIeImage.ID, pPIeImage);
             NotifyPropertyChanged("Images");
+            return (pPIeImage);
         }
 
         public void RemoveImage(String iID)
@@ -80,15 +83,16 @@ namespace KnitupFramework.Project
             }
 
             JArray pJAyImages = pJOtImages["images"].Value<JArray>(); ;
-            foreach(JValue curImage in pJAyImages)
+            foreach(JObject curImage in pJAyImages)
             {
-                ZipArchiveEntry pZAEImage = iArchive.GetEntry(curImage.Value<String>());
+                ProjectImage pPIeImage = ProjectImage.FromJSON(curImage);
+                ZipArchiveEntry pZAEImage = iArchive.GetEntry(pPIeImage.ID);
                 if (pZAEImage != null)
                 {
                     using (Stream pStmImage = pZAEImage.Open())
                     {
-                        Image pImgImage = Image.FromStream(pStmImage);
-                        cDicImages.Add(curImage.Value<String>(), pImgImage);
+                        pPIeImage.Image = Image.FromStream(pStmImage);
+                        cDicImages.Add(pPIeImage.ID, pPIeImage);
                     }
                 }
             }
@@ -98,9 +102,9 @@ namespace KnitupFramework.Project
         {
             JObject pJOtImages = new JObject();
             JArray pJAyImages = new JArray();
-            foreach(String curImage in Images.Keys)
+            foreach(ProjectImage curImage in Images.Values)
             {
-                pJAyImages.Add(new JValue(curImage));
+                pJAyImages.Add(curImage.ToJSON());
             }
             pJOtImages.Add("images", pJAyImages);
 
@@ -112,12 +116,12 @@ namespace KnitupFramework.Project
                 await pStmImages.FlushAsync();
             }
 
-            foreach (String curImage in Images.Keys)
+            foreach (ProjectImage curImage in Images.Values)
             {
-                ZipArchiveEntry pZAEImage = iArchive.CreateEntry(curImage, CompressionLevel.Optimal);
+                ZipArchiveEntry pZAEImage = iArchive.CreateEntry(curImage.ID, CompressionLevel.Optimal);
                 using (Stream pStmImage = pZAEImage.Open())
                 {
-                    Images[curImage].Save(pStmImage, System.Drawing.Imaging.ImageFormat.Jpeg);    //TODO min compression
+                    await curImage.Image.ToStreamMaxJPEGAsync(pStmImage);
                     await pStmImage.FlushAsync();
                 }
             }

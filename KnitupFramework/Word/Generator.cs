@@ -190,7 +190,7 @@ namespace KnitupFramework.Word
                 RaiseGenerateProgress(GeneratorGenerateEventArgs.ProgressCounterType.indeterminate, 0, 0, "Creating secondary footer.", "");
                 dynamic pObjPrimaryFooter = pObjIntroSection.Footers.Item[1];
                 dynamic pObjPrimaryFooterRange = pObjPrimaryFooter.Range;
-                pObjPrimaryFooterRange.InsertAfter(String.Format("{0}\r\n", cKPtProject.Options.CopyrightMessage));
+                pObjPrimaryFooterRange.InsertAfter(String.Format("{0}\r\n", cKPtProject.Options.CopyrightMessage.Replace("(c)", "©")));
                 pObjPrimaryFooterRange.InsertAfter("This pattern is protected by the copyright law and cannot be reproduced in any form.\r\n");
                 pObjPrimaryFooterRange.Style = "Intense Emphasis";
                 pObjPrimaryFooterRange.ParagraphFormat.Alignment = 2;
@@ -327,7 +327,7 @@ namespace KnitupFramework.Word
                                             pObjActiveRange.InsertAfter(String.Empty);
                                             pIntEnd = pObjActiveRange.End;
                                             pObjActiveRange.Start = pIntStart;
-                                            Clipboard.SetImage(Project.Images.Images[pStrKey]);
+                                            Clipboard.SetImage(Project.Images.Images[pStrKey].Image);
                                             pObjActiveRange.Paste();
                                             pObjActiveRange.Start = pIntEnd;
 

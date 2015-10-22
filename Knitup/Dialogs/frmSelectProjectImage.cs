@@ -36,7 +36,7 @@ namespace Knitup.Dialogs
             }
         }
 
-        public String SelectedImageKey { get; private set; }
+        public String SelectedImageID { get; private set; }
 
         #endregion
 
@@ -54,9 +54,9 @@ namespace Knitup.Dialogs
         private void ListImages()
         {
             lbxImages.Items.Clear();
-            foreach (String curImageKey in Images.Images.Keys)
+            foreach (ProjectImage curImage in Images.Images.Values)
             {
-                lbxImages.Items.Add(curImageKey.Replace("images\\", String.Empty));
+                lbxImages.Items.Add(curImage);
             }
         }
 
@@ -68,9 +68,9 @@ namespace Knitup.Dialogs
         {
             if (lbxImages.SelectedIndex > -1)
             {
-                String pStrKey = lbxImages.SelectedItem.ToString();
-                picPreview.Image = Images.Images["images\\" + pStrKey];
-                SelectedImageKey = pStrKey;
+                ProjectImage pPIeImage = (ProjectImage)lbxImages.SelectedItem;
+                picPreview.Image = pPIeImage.Image;
+                SelectedImageID = pPIeImage.ID;
             }
         }
 

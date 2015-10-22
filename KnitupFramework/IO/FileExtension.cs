@@ -14,10 +14,19 @@ namespace KnitupFramework.IO
 
         //Image extensions
         public static readonly FileExtension EXTENSION_IMAGE_BMP = new FileExtension("bmp", "BMP Image", "Bitmap Image");
+        public static readonly FileExtension EXTENSION_IMAGE_EMF = new FileExtension("emf", "EMF Image", "Enhanced Metafile Image");
         public static readonly FileExtension EXTENSION_IMAGE_GIF = new FileExtension("gif", "GIF Image", "Graphics Interchange Format Image");
         public static readonly FileExtension EXTENSION_IMAGE_JPEG = new FileExtension("jpeg", "JPEG Image", "Joint Photographics Group Image", FileExtensionGroup.EXTENSION_GROUP_IMAGE_JPG);
         public static readonly FileExtension EXTENSION_IMAGE_JPG = new FileExtension("jpg", "JPG Image", "Joint Photographics Group Image", FileExtensionGroup.EXTENSION_GROUP_IMAGE_JPG);
         public static readonly FileExtension EXTENSION_IMAGE_PNG = new FileExtension("png", "PNG Image", "Portable Network Graphics Image");
+        public static readonly FileExtension EXTENSION_IMAGE_TIFF = new FileExtension("tiff", "TIFF Image", "Tagged Image File Format Image");
+        public static readonly FileExtension EXTENSION_IMAGE_WMF = new FileExtension("wmf", "WMF Image", "Windows Metafile Image");
+
+        //Knitup extensions
+        public static readonly FileExtension EXTENSION_KNITUP_PROJECT = new FileExtension("kup", "KUP Project", "Knitup Project Archive");
+
+        //Document import extensions
+        public static readonly FileExtension EXTENSION_DOCUMENT_MARKDOWN = new FileExtension("md", "MD Document", "Markdown Document");
 
         #endregion
 
@@ -229,6 +238,7 @@ namespace KnitupFramework.IO
             {".json", "application/json"},
             {".jsx", "text/jscript"},
             {".jsxbin", "text/plain"},
+            {".kup", "application/x-zip-compressed"},                   //Knitup
             {".latex", "application/x-latex"},
             {".library-ms", "application/windows-library+xml"},
             {".lit", "application/x-ms-reader"},
@@ -257,6 +267,7 @@ namespace KnitupFramework.IO
             {".manifest", "application/x-ms-manifest"},
             {".map", "text/plain"},
             {".master", "application/xml"},
+            {".md", "text/plain"},                          //Markdown
             {".mda", "application/msaccess"},
             {".mdb", "application/x-msaccess"},
             {".mde", "application/msaccess"},
