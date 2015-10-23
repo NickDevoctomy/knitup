@@ -351,7 +351,11 @@ namespace Knitup
                     if (pSPISelect.ShowDialog() == DialogResult.OK)
                     {
                         String pStrImage = String.Format("![{0}]({1})", "Caption For Your Image Goes Here", pSPISelect.SelectedImageID);
+                        Int32 pIntStart = txtInput.SelectionStart;
                         txtInput.Text = txtInput.Text.Insert(txtInput.SelectionStart, pStrImage);
+                        txtInput.SelectionStart = pIntStart;
+                        txtInput.SelectionLength = 0;
+                        txtInput.ScrollToCaret();
                     }
                 }
             }
@@ -402,7 +406,6 @@ namespace Knitup
                         cDlgPreviewPopup.Image = pImgThumb;
                         cDlgPreviewPopup.Show();
                         cDlgPreviewPopup.Size = new Size(pImgThumb.Width, pImgThumb.Height);
-                        cDlgPreviewPopup.StartAutoClose();
                     }
                 }
             }));

@@ -31,14 +31,5 @@ namespace Knitup.Dialogs
 
         #endregion
 
-        #region public methods
-
-        public void StartAutoClose()
-        {
-            cTimAutoClose.Start();
-        }
-
-        #endregion
-
     }
 }
