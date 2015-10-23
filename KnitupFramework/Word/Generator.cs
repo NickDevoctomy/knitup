@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Drawing;
 using KnitupFramework.Project;
 using System.IO;
 using System.Windows.Forms;
@@ -251,21 +250,33 @@ namespace KnitupFramework.Word
                     case Parser.LineType.heading5:
                     case Parser.LineType.heading6:
                         {
-                            //heading style 1 to 5, (heading level - 1)
-                            if (pIntCurSection > 2 && pSecSection.Heading.LineType == Parser.LineType.heading2)
+                            String pStrHeadingText = pSecSection.Heading.Line.Substring(pSecSection.Heading.Line.IndexOf(' ') + 1);
+                            Int32 pIntColumns = 1;
+                            if(pStrHeadingText.EndsWith("]"))
                             {
-                                pObjActiveRange.InsertBreak(7); //column break is 8
+                                Int32 pIntStartColDefinition = pStrHeadingText.LastIndexOf('[');
+                                String pStrColDefiniton = pStrHeadingText.Substring(pIntStartColDefinition, pStrHeadingText.Length - pIntStartColDefinition);
+                                pStrHeadingText = pStrHeadingText.Substring(0, pStrHeadingText.Length - pStrColDefiniton.Length);
+                                pStrColDefiniton = pStrColDefiniton.Trim(new Char[] { '[', ']' });
+                                pIntColumns = Int32.Parse(pStrColDefiniton);
+                            }
 
-                                if (pIntCurSection == 14)
+                            //heading style 1 to 5, (heading level - 1)
+                            if (pSecSection.Heading.LineType == Parser.LineType.heading2)
+                            {
+                                if (pIntCurSection > 2)
                                 {
-                                    //Start of our comlumned section
+                                    pObjActiveRange.InsertBreak(7);
+                                }
+                                if (pIntColumns > 1)
+                                {
                                     pObjActiveRange.InsertBreak(3);
-                                    pObjActiveRange.PageSetup.TextColumns.Add();
+                                    pObjActiveRange.PageSetup.TextColumns.SetCount(pIntColumns);
                                     pObjActiveRange.PageSetup.DifferentFirstPageHeaderFooter = 0;
                                }
                             }
                             Int32 pIntStart = pObjActiveRange.End;
-                            pObjActiveRange.InsertAfter(pSecSection.Heading.Line.Substring(pSecSection.Heading.Line.IndexOf(' ') + 1) + "\r\n");
+                            pObjActiveRange.InsertAfter(pStrHeadingText + "\r\n");
                             Int32 pIntEnd = pObjActiveRange.End;
                             pObjActiveRange.Start = pIntStart;
                             pObjActiveRange.Style = String.Format("Heading {0}", ((Int32)pSecSection.Heading.LineType) - 1);

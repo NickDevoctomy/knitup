@@ -16,6 +16,7 @@ namespace KnitupFramework.Markdown
         private Section cSecParentSection;
         private List<ParsedItem> cLisSubItems;
         private List<Section> cLisSubSections = new List<Section>();
+        private Int32 cIntColumns = 0;
 
         #endregion
 

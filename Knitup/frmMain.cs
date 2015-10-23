@@ -225,7 +225,7 @@ namespace Knitup
                 out pLisImages,
                 false))
             {
-                Image pImgLogo = DrawingUtility.CreateThumbnail(pLisImages[0], 512, 512, Color.White);
+                Image pImgLogo = DrawingUtility.CreateThumbnail(pLisImages[0], 512, 512, 64, Color.White);
                 picCompanyLogo.Image = pImgLogo;
                 cKPtProject.Info.CompanyLogo = pImgLogo;
             }

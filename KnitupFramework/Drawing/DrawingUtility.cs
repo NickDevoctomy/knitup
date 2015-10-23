@@ -74,6 +74,7 @@ namespace KnitupFramework.Drawing
         public static Image CreateThumbnail(String iFullPath, 
             Int32 iMaxWidth, 
             Int32 iMaxHeight,
+            Int32 iMargin,
             Color iBackingColour)
         {
             Image pImgImage = Image.FromFile(iFullPath);
@@ -87,11 +88,11 @@ namespace KnitupFramework.Drawing
                     Double pDblRatio = 0;
                     if (pImgImage.Width > pImgImage.Height)
                     {
-                        pDblRatio = (Double)pBmpRescaled.Width / pImgImage.Width;
+                        pDblRatio = (Double)(pBmpRescaled.Width - iMargin) / pImgImage.Width;
                     }
                     else
                     {
-                        pDblRatio = (Double)pBmpRescaled.Height / pImgImage.Height;
+                        pDblRatio = (Double)(pBmpRescaled.Height - iMargin) / pImgImage.Height;
                     }
                     Double pDblRescaledWidth = pImgImage.Width * pDblRatio;
                     Double pDblRescaledHeight = pImgImage.Height * pDblRatio;
