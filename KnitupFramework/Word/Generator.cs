@@ -291,7 +291,7 @@ namespace KnitupFramework.Word
                                     case Parser.LineType.body:
                                         {
                                             pIntStart = pObjActiveRange.End;
-                                            pObjActiveRange.InsertAfter(curSubItem.Line);
+                                            pObjActiveRange.InsertAfter(curSubItem.Line + "\n");
                                             pIntEnd = pObjActiveRange.End;
                                             pObjActiveRange.Start = pIntStart;
                                             pObjActiveRange.Style = "Normal";
